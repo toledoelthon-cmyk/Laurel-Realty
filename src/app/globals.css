@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-laurel: #203e34;
+  --color-gold: #b8944e;
+  --color-ivory: #f4efe6;
+  --color-stone: #d8cbb8;
+  --color-deep-blue: #223746;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(244, 239, 230, 0.92), rgba(255, 252, 247, 0.96)),
+    var(--color-ivory);
+  color: var(--color-deep-blue);
+  font-family: var(--font-sans), Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(184, 148, 78, 0.28);
+  color: var(--color-laurel);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 4px;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-laurel);
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  p {
+    line-height: 1.75;
+  }
+}
+
+@layer components {
+  .site-shell {
+    @apply mx-auto w-full max-w-content px-5 sm:px-6 lg:px-8;
+  }
+
+  .premium-section {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .premium-section-compact {
+    @apply py-12 sm:py-16;
+  }
+
+  .surface-panel {
+    @apply rounded-soft border border-gold/20 bg-white/70 shadow-soft backdrop-blur;
+  }
+
+  .quiet-panel {
+    @apply rounded-soft border border-laurel/10 bg-ivory/65;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase text-gold;
+  }
+
+  .premium-rule {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-gold/60 to-transparent;
+  }
+
+  .field-label {
+    @apply text-sm font-semibold text-laurel;
+  }
+
+  .field-input {
+    @apply w-full rounded-soft border border-laurel/15 bg-white/85 px-4 py-3 text-sm text-deepBlue shadow-line transition placeholder:text-deepBlue/45 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20;
+  }
+
+  .field-help {
+    @apply text-xs leading-relaxed text-deepBlue/60;
+  }
+}
