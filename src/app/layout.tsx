@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Playfair_Display } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { WhatsAppFloatingButton } from "@/components/layout/WhatsAppFloatingButton";
@@ -53,6 +54,7 @@ export default function RootLayout({
         <StructuredData />
         <Header />
         <main>{children}</main>
+        <Analytics />
         <Footer />
         <WhatsAppFloatingButton />
       </body>
