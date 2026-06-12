@@ -20,6 +20,7 @@ export const whatsappHref = `https://wa.me/${brand.whatsappDigits}?text=${encode
 export const navItems = [
   { label: "Inicio", href: "/" },
   { label: "Propietarios", href: "/propietarios" },
+  { label: "Propiedades", href: "/propiedades" },
   { label: "Busco propiedad", href: "/busco-propiedad" },
   { label: "Asesoría", href: "/asesoria" },
   { label: "Guías", href: "/guias" },

@@ -174,7 +174,7 @@ export default async function PropiedadesPage() {
       <section className="premium-section bg-white/45">
         <div className="site-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeading
-            description="Información inicial sobre el catálogo futuro de Laurel Realty."
+            description="Información inicial sobre el catálogo inmobiliario de Laurel Realty."
             title="Preguntas frecuentes"
           />
           <FAQAccordion items={faqs} />

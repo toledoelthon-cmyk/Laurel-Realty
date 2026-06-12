@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import {
-  Building2,
   CheckCircle2,
   Home,
   KeyRound,
@@ -192,54 +191,38 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="premium-section bg-laurel text-ivory">
+      <section className="premium-section bg-white/45">
         <div className="site-shell">
           <SectionHeading
             alignment="center"
-            description="Muy pronto encontrarás aquí opciones seleccionadas para venta y renta en Cancún y Riviera Maya. Mientras tanto, puedes registrar tu búsqueda o publicar tu propiedad con Laurel Realty."
-            title="Estamos construyendo nuestro catálogo de propiedades"
-            className="[&_*]:text-ivory [&_.eyebrow]:text-gold"
+            description={
+              featuredProperties.length
+                ? "Propiedades disponibles seleccionadas por Laurel Realty en Cancún y Riviera Maya."
+                : "Explora nuestro catálogo de propiedades disponibles en Cancún y Riviera Maya."
+            }
+            title="Propiedades destacadas"
           />
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
-            <ServiceCard
-              className="bg-ivory text-deepBlue"
-              ctaLabel="Registrar mi búsqueda"
-              description="Déjanos tus preferencias y te avisaremos cuando tengamos opciones compatibles."
-              href="/busco-propiedad"
-              icon={<Search aria-hidden size={21} />}
-              title="Busco una propiedad"
-            />
-            <ServiceCard
-              className="bg-ivory text-deepBlue"
-              ctaLabel="Publicar mi propiedad"
-              description="Incorpora tu inmueble a nuestro futuro catálogo con acompañamiento profesional."
-              href="/propietarios"
-              icon={<Building2 aria-hidden size={21} />}
-              title="Tengo una propiedad"
-            />
-          </div>
-        </div>
-      </section>
-
-      {featuredProperties.length ? (
-        <section className="premium-section bg-white/45">
-          <div className="site-shell">
-            <SectionHeading
-              alignment="center"
-              description="Propiedades disponibles seleccionadas por Laurel Realty en Cancún y Riviera Maya."
-              title="Propiedades destacadas"
-            />
+          {featuredProperties.length ? (
             <div className="mt-12">
               <PropertyGrid properties={featuredProperties} />
             </div>
-            <div className="mt-10 flex justify-center">
-              <Button href="/propiedades" variant="outline">
-                Ver catálogo
-              </Button>
+          ) : (
+            <div className="mx-auto mt-10 max-w-2xl rounded-soft border border-gold/20 bg-white/70 p-8 text-center shadow-line">
+              <p className="text-sm text-deepBlue/72 sm:text-base">
+                Explora nuestro catálogo de propiedades disponibles en Cancún y
+                Riviera Maya.
+              </p>
             </div>
+          )}
+          <div className="mt-10 flex justify-center">
+            <Button href="/propiedades" variant="outline">
+              {featuredProperties.length
+                ? "Ver propiedades"
+                : "Ver propiedades disponibles"}
+              </Button>
           </div>
-        </section>
-      ) : null}
+        </div>
+      </section>
 
       <section className="premium-section">
         <div className="site-shell">
