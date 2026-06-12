@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { brand } from "@/lib/constants";
 import { Field, TextareaField } from "./FormControls";
 
 type PropertyInterestFormProps = {
@@ -18,6 +19,31 @@ export function PropertyInterestForm({ propertyTitle }: PropertyInterestFormProp
       method="post"
       onSubmit={(event) => {
         event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const fullName = String(formData.get("fullName") || "").trim();
+        const phone = String(formData.get("phone") || "").trim();
+        const email = String(formData.get("email") || "").trim();
+        const message = String(formData.get("message") || "").trim();
+        const propertyUrl = window.location.href;
+
+        const whatsappMessage = [
+          "Hola, quiero solicitar más información sobre una propiedad de Laurel Realty.",
+          "",
+          `Nombre: ${fullName}`,
+          `WhatsApp: ${phone}`,
+          `Correo: ${email || "No proporcionado"}`,
+          `Mensaje: ${message || "No proporcionado"}`,
+          `Propiedad: ${propertyTitle}`,
+          `URL de la propiedad: ${propertyUrl}`
+        ].join("\n");
+
+        window.open(
+          `https://wa.me/${brand.whatsappDigits}?text=${encodeURIComponent(
+            whatsappMessage
+          )}`,
+          "_blank",
+          "noopener,noreferrer"
+        );
         setSubmitted(true);
       }}
     >
@@ -28,7 +54,7 @@ export function PropertyInterestForm({ propertyTitle }: PropertyInterestFormProp
           className="rounded-soft border border-gold/30 bg-gold/10 px-4 py-3 text-sm font-semibold text-laurel"
           role="status"
         >
-          Gracias. Recibimos tu interés y te contactaremos con más información.
+          Se abrió WhatsApp con tu solicitud prellenada.
         </div>
       ) : null}
       <div className="grid gap-5 md:grid-cols-2">

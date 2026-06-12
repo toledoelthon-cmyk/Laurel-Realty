@@ -3,13 +3,9 @@ import {
   Building2,
   CheckCircle2,
   Home,
-  KeyRound,
   Search,
-  ShieldCheck
 } from "lucide-react";
-import { EmptyCatalogCTA } from "@/components/catalog/EmptyCatalogCTA";
-import { PropertyFilters } from "@/components/catalog/PropertyFilters";
-import { PropertyGrid } from "@/components/catalog/PropertyGrid";
+import { PropertyCatalog } from "@/components/catalog/PropertyCatalog";
 import { CatalogQuickForm } from "@/components/forms/CatalogQuickForm";
 import { Button } from "@/components/ui/Button";
 import { CTASection } from "@/components/sections/CTASection";
@@ -17,7 +13,7 @@ import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { PageHero } from "@/components/sections/PageHero";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
-import { properties } from "@/data/properties";
+import { getProperties } from "@/data/properties";
 
 export const metadata: Metadata = {
   title: {
@@ -77,9 +73,9 @@ function CatalogHeroVisual() {
           <span className="h-20 border border-ivory/20 bg-ivory/8" />
         </div>
         <div className="absolute bottom-8 left-8 right-8 border-t border-gold/40 pt-5">
-          <p className="font-display text-3xl text-ivory">Catálogo futuro</p>
+          <p className="font-display text-3xl text-ivory">Catálogo inmobiliario</p>
           <p className="mt-3 text-sm text-ivory/70">
-            Estructura preparada para propiedades reales en venta y renta.
+            Propiedades seleccionadas para comprar, rentar o invertir con confianza.
           </p>
         </div>
       </div>
@@ -87,19 +83,16 @@ function CatalogHeroVisual() {
   );
 }
 
-export default function PropiedadesPage() {
+export default async function PropiedadesPage() {
+  const properties = await getProperties();
+
   return (
     <>
       <PageHero
         eyebrow="Catálogo inmobiliario"
-        subtitle="Estamos incorporando nuevas casas, apartamentos e inmuebles para venta y renta. Mientras tanto, puedes registrar tu búsqueda o publicar tu propiedad con Laurel Realty."
+        subtitle="Explora propiedades en venta y renta seleccionadas por Laurel Realty. Encuentra casas, departamentos y oportunidades inmobiliarias con información clara, atención personalizada y acompañamiento profesional."
         title="Propiedades disponibles en Cancún y Riviera Maya"
         visual={<CatalogHeroVisual />}
-      />
-
-      <EmptyCatalogCTA
-        title="Próximamente nuevas propiedades"
-        description="Todavía no tenemos propiedades publicadas en este catálogo, pero estamos trabajando en incorporar opciones seleccionadas para venta y renta en Cancún y Riviera Maya."
       />
 
       <section className="premium-section bg-white/45">
@@ -132,14 +125,11 @@ export default function PropiedadesPage() {
         <div className="site-shell">
           <SectionHeading
             alignment="center"
-            description="Los filtros y la cuadrícula quedan preparados para integrar propiedades reales cuando estén disponibles."
-            title="Estructura futura del catálogo"
+            description="Consulta propiedades disponibles en venta y renta, con filtros por operación, tipo y zona."
+            title="Catálogo de propiedades disponibles"
           />
           <div className="mt-10">
-            <PropertyFilters />
-          </div>
-          <div className="mt-10">
-            <PropertyGrid properties={properties} />
+            <PropertyCatalog properties={properties} />
           </div>
         </div>
       </section>

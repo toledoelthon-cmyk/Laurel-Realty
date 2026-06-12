@@ -10,9 +10,13 @@ export function PropertyGrid({ properties }: PropertyGridProps) {
   if (properties.length === 0) {
     return (
       <EmptyCatalogCTA
-        eyebrow="Sin inventario público por ahora"
-        title="Estamos incorporando nuevas propiedades en Cancún y Riviera Maya"
-        description="Mientras tanto, puedes registrar tu búsqueda o publicar tu propiedad con Laurel Realty."
+        eyebrow="Sin resultados"
+        title="No encontramos propiedades con esos filtros por ahora"
+        description="Puedes ajustar tu búsqueda o contactarnos para recibir opciones personalizadas."
+        primaryHref="/contacto"
+        primaryLabel="Solicitar asesoría"
+        secondaryHref="/busco-propiedad"
+        secondaryLabel="Registrar mi búsqueda"
       />
     );
   }

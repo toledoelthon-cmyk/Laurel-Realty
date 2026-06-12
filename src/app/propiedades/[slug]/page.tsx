@@ -10,7 +10,7 @@ type PageProps = {
 
 export default async function PropertyPage({ params }: PageProps) {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+  const property = await getPropertyBySlug(slug);
 
   if (!property) {
     notFound();

@@ -1,10 +1,15 @@
-import { Bath, BedDouble, MapPin, Ruler } from "lucide-react";
+import { Bath, BedDouble, MapPin, MessageCircle, Ruler } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 import {
   formatPropertyLabel,
   formatPropertyPrice,
+  formatPropertyBathrooms,
+  getPropertyWhatsappHref,
   type Property
 } from "@/data/properties";
+import { urlForPropertyImage } from "@/sanity/lib/image";
 
 type PropertyCardProps = {
   property: Property;
@@ -12,15 +17,24 @@ type PropertyCardProps = {
 
 export function PropertyCard({ property }: PropertyCardProps) {
   const image = property.images[0];
+  const whatsappHref = getPropertyWhatsappHref(property);
+  const imageSrc = image
+    ? urlForPropertyImage(image, { width: 900, height: 675 })
+    : "";
 
   return (
     <article className="overflow-hidden rounded-soft border border-laurel/10 bg-white/70 shadow-line transition hover:-translate-y-0.5 hover:border-gold/50 hover:shadow-soft">
       {image ? (
-        <img
-          alt={image.alt}
-          className="aspect-[4/3] w-full object-cover"
-          src={image.src}
-        />
+        <div className="relative aspect-[4/3] w-full overflow-hidden">
+          <Image
+            alt={image.alt}
+            className="object-cover"
+            fill
+            priority={property.featured}
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            src={imageSrc}
+          />
+        </div>
       ) : (
         <div className="flex aspect-[4/3] items-center justify-center bg-laurel text-center text-ivory">
           <span className="px-6 text-sm text-ivory/70">
@@ -36,7 +50,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
         <h2 className="mt-3 text-2xl leading-tight">{property.title}</h2>
         <p className="mt-3 flex items-center gap-2 text-sm text-deepBlue/65">
           <MapPin aria-hidden size={16} />
-          {property.zone}, {property.city}
+          {property.zone}
         </p>
         <div className="mt-5 grid grid-cols-3 gap-3 border-t border-gold/15 pt-4 text-xs font-semibold text-deepBlue/62">
           <span className="inline-flex items-center gap-1.5">
@@ -45,11 +59,13 @@ export function PropertyCard({ property }: PropertyCardProps) {
           </span>
           <span className="inline-flex items-center gap-1.5">
             <Bath aria-hidden size={15} />
-            {property.bathrooms ?? "N/D"}
+            {formatPropertyBathrooms(property)}
           </span>
           <span className="inline-flex items-center gap-1.5">
             <Ruler aria-hidden size={15} />
-            {property.area ? `${property.area} m²` : "N/D"}
+            {property.constructionSize
+              ? `${property.constructionSize} m²`
+              : "N/D"}
           </span>
         </div>
         <div className="mt-5 flex items-center justify-between gap-4 border-t border-gold/15 pt-4">
@@ -63,6 +79,16 @@ export function PropertyCard({ property }: PropertyCardProps) {
             Ver detalle
           </Link>
         </div>
+        <Button
+          className="mt-4 w-full"
+          external
+          href={whatsappHref}
+          size="sm"
+          variant="outline"
+        >
+          <MessageCircle aria-hidden size={16} />
+          WhatsApp
+        </Button>
       </div>
     </article>
   );

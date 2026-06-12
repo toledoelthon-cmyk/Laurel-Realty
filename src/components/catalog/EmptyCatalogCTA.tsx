@@ -6,13 +6,24 @@ type EmptyCatalogCTAProps = {
   eyebrow?: string;
   title?: string;
   description?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
 };
 
 export function EmptyCatalogCTA({
   eyebrow = "Catálogo en preparación",
   title = "Estamos preparando una selección cuidada de propiedades.",
-  description = "Estamos incorporando nuevas propiedades en Cancún y Riviera Maya. Mientras tanto, puedes registrar tu búsqueda o publicar tu propiedad con Laurel Realty."
+  description = "Estamos incorporando nuevas propiedades en Cancún y Riviera Maya. Mientras tanto, puedes registrar tu búsqueda o publicar tu propiedad con Laurel Realty.",
+  primaryHref = whatsappHref,
+  primaryLabel = "Hablar por WhatsApp",
+  secondaryHref = "/propietarios",
+  secondaryLabel = "Publicar mi propiedad"
 }: EmptyCatalogCTAProps) {
+  const isExternalPrimary = primaryHref.startsWith("http");
+  const isExternalSecondary = secondaryHref.startsWith("http");
+
   return (
     <section className="premium-section-compact">
       <div className="site-shell">
@@ -28,11 +39,15 @@ export function EmptyCatalogCTA({
             {description}
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button external href={whatsappHref}>
-              Hablar por WhatsApp
+            <Button external={isExternalPrimary} href={primaryHref}>
+              {primaryLabel}
             </Button>
-            <Button href="/propietarios" variant="outline">
-              Publicar mi propiedad
+            <Button
+              external={isExternalSecondary}
+              href={secondaryHref}
+              variant="outline"
+            >
+              {secondaryLabel}
             </Button>
           </div>
         </div>

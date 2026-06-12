@@ -7,22 +7,24 @@ import {
   MessageCircle,
   Ruler
 } from "lucide-react";
+import Image from "next/image";
 import { PropertyInterestForm } from "@/components/forms/PropertyInterestForm";
 import { Button } from "@/components/ui/Button";
 import {
   formatPropertyLabel,
   formatPropertyPrice,
+  formatPropertyBathrooms,
+  getPropertyWhatsappHref,
   type Property
 } from "@/data/properties";
+import { urlForPropertyImage } from "@/sanity/lib/image";
 
 type PropertyDetailPageProps = {
   property: Property;
 };
 
 export function PropertyDetailPage({ property }: PropertyDetailPageProps) {
-  const whatsappHref = `https://wa.me/529984032240?text=${encodeURIComponent(
-    `Hola, quiero información sobre la propiedad: ${property.title}`
-  )}`;
+  const whatsappHref = getPropertyWhatsappHref(property);
 
   return (
     <>
@@ -36,7 +38,7 @@ export function PropertyDetailPage({ property }: PropertyDetailPageProps) {
               </h1>
               <p className="mt-4 flex items-center gap-2 text-sm text-deepBlue/70">
                 <MapPin aria-hidden size={17} />
-                {property.addressApproximate || `${property.zone}, ${property.city}`}
+                {property.location || property.zone}
               </p>
             </div>
             <div className="rounded-soft border border-gold/20 bg-white/70 p-6 shadow-line">
@@ -60,14 +62,29 @@ export function PropertyDetailPage({ property }: PropertyDetailPageProps) {
         <div className="site-shell">
           {property.images.length ? (
             <div className="grid gap-4 md:grid-cols-3">
-              {property.images.map((image) => (
-                <img
-                  alt={image.alt}
-                  className="aspect-[4/3] w-full rounded-soft object-cover"
-                  key={image.src}
-                  src={image.src}
-                />
-              ))}
+              {property.images.map((image, index) => {
+                const imageSrc = urlForPropertyImage(image, {
+                  width: index === 0 ? 1400 : 900,
+                  height: index === 0 ? 900 : 675,
+                  quality: index === 0 ? 86 : 82
+                });
+
+                return (
+                  <div
+                    className={index === 0 ? "relative aspect-[16/10] overflow-hidden rounded-soft md:col-span-2 md:row-span-2" : "relative aspect-[4/3] overflow-hidden rounded-soft"}
+                    key={`${image.src}-${index}`}
+                  >
+                    <Image
+                      alt={image.alt}
+                      className="object-cover"
+                      fill
+                      priority={index === 0}
+                      sizes={index === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"}
+                      src={imageSrc}
+                    />
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="flex min-h-80 items-center justify-center rounded-soft border border-gold/20 bg-laurel text-center text-ivory">
@@ -85,25 +102,26 @@ export function PropertyDetailPage({ property }: PropertyDetailPageProps) {
             <h2 className="text-3xl leading-tight">Características</h2>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <DetailStat icon={<BedDouble aria-hidden size={18} />} label="Habitaciones" value={property.bedrooms ?? "N/D"} />
-              <DetailStat icon={<Bath aria-hidden size={18} />} label="Baños" value={property.bathrooms ?? "N/D"} />
+              <DetailStat icon={<Bath aria-hidden size={18} />} label="Baños" value={formatPropertyBathrooms(property)} />
               <DetailStat icon={<Car aria-hidden size={18} />} label="Estacionamientos" value={property.parkingSpaces ?? "N/D"} />
-              <DetailStat icon={<Ruler aria-hidden size={18} />} label="Área" value={property.area ? `${property.area} m²` : "N/D"} />
+              <DetailStat icon={<Ruler aria-hidden size={18} />} label="Construcción" value={property.constructionSize ? `${property.constructionSize} m²` : "N/D"} />
+              <DetailStat icon={<Ruler aria-hidden size={18} />} label="Terreno" value={property.landSize ? `${property.landSize} m²` : "N/D"} />
             </div>
           </div>
           <div className="surface-panel p-6 sm:p-8">
             <h2 className="text-3xl leading-tight">Descripción</h2>
             <p className="mt-5 text-sm text-deepBlue/72 sm:text-base">
-              {property.description}
+              {property.description || property.shortDescription}
             </p>
-            {property.features.length ? (
+            {property.amenities.length ? (
               <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-                {property.features.map((feature) => (
-                  <li className="flex items-start gap-3 text-sm text-deepBlue/74" key={feature}>
+                {property.amenities.map((amenity) => (
+                  <li className="flex items-start gap-3 text-sm text-deepBlue/74" key={amenity}>
                     <CheckCircle2
                       aria-hidden
                       className="mt-0.5 h-5 w-5 shrink-0 text-gold"
                     />
-                    <span>{feature}</span>
+                    <span>{amenity}</span>
                   </li>
                 ))}
               </ul>

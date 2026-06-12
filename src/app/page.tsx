@@ -9,12 +9,14 @@ import {
   UserRoundCheck
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { PropertyGrid } from "@/components/catalog/PropertyGrid";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProcessSteps } from "@/components/sections/ProcessSteps";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { TestimonialPlaceholder } from "@/components/sections/TestimonialPlaceholder";
+import { getFeaturedProperties } from "@/data/properties";
 import { whatsappHref } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -125,7 +127,9 @@ function HomeVisual() {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featuredProperties = await getFeaturedProperties();
+
   return (
     <>
       <PageHero
@@ -216,6 +220,26 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {featuredProperties.length ? (
+        <section className="premium-section bg-white/45">
+          <div className="site-shell">
+            <SectionHeading
+              alignment="center"
+              description="Propiedades disponibles seleccionadas por Laurel Realty en Cancún y Riviera Maya."
+              title="Propiedades destacadas"
+            />
+            <div className="mt-12">
+              <PropertyGrid properties={featuredProperties} />
+            </div>
+            <div className="mt-10 flex justify-center">
+              <Button href="/propiedades" variant="outline">
+                Ver catálogo
+              </Button>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="premium-section">
         <div className="site-shell">
