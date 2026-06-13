@@ -126,7 +126,9 @@ function mapSanityProperty(property: SanityProperty): Property {
 export async function getProperties() {
   try {
     const sanityProperties = await client.fetch<SanityProperty[]>(
-      propertiesQuery
+      propertiesQuery,
+      {},
+      { cache: "no-store" }
     );
 
     return sanityProperties.map(mapSanityProperty);
@@ -138,7 +140,9 @@ export async function getProperties() {
 export async function getFeaturedProperties() {
   try {
     const sanityProperties = await client.fetch<SanityProperty[]>(
-      featuredPropertiesQuery
+      featuredPropertiesQuery,
+      {},
+      { next: { revalidate: 60 } }
     );
 
     return sanityProperties.map(mapSanityProperty);

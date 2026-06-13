@@ -18,6 +18,8 @@ import { TestimonialPlaceholder } from "@/components/sections/TestimonialPlaceho
 import { getFeaturedProperties } from "@/data/properties";
 import { whatsappHref } from "@/lib/constants";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Laurel Realty | Asesoría inmobiliaria en Cancún y Riviera Maya",
   description:

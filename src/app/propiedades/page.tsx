@@ -15,6 +15,8 @@ import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { getProperties } from "@/data/properties";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: {
     absolute:
