@@ -3,9 +3,17 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Field, SelectField } from "./FormControls";
+import {
+  FormStatus,
+  getFormValue,
+  openWhatsAppMessage,
+  optionalValue,
+  validateNameAndPhone
+} from "./whatsapp";
 
 export function GuideInterestForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <form
@@ -14,19 +22,31 @@ export function GuideInterestForm() {
       method="post"
       onSubmit={(event) => {
         event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const validationError = validateNameAndPhone(formData);
+
+        if (validationError) {
+          setSubmitted(false);
+          setError(validationError);
+          return;
+        }
+
+        openWhatsAppMessage([
+          "Hola, quiero recibir información inmobiliaria de Laurel Realty.",
+          "",
+          `Nombre: ${getFormValue(formData, "fullName")}`,
+          `WhatsApp: ${getFormValue(formData, "phone")}`,
+          `Correo: ${optionalValue(getFormValue(formData, "email"))}`,
+          `Tema: ${getFormValue(formData, "interest")}`,
+          "Mensaje: Solicitud enviada desde Guías inmobiliarias."
+        ]);
+
+        setError("");
         setSubmitted(true);
       }}
     >
       <input name="source" type="hidden" value="laurel-realty-guide-interest" />
-      {submitted ? (
-        <div
-          className="rounded-soft border border-gold/30 bg-gold/10 px-4 py-3 text-sm font-semibold text-laurel"
-          role="status"
-        >
-          Gracias. Recibimos tus datos y te enviaremos información útil sobre
-          temas inmobiliarios.
-        </div>
-      ) : null}
+      <FormStatus error={error} submitted={submitted} />
       <div className="grid gap-5 md:grid-cols-2">
         <Field
           autoComplete="name"
@@ -47,7 +67,8 @@ export function GuideInterestForm() {
           autoComplete="tel"
           label="WhatsApp"
           name="phone"
-          placeholder="Opcional"
+          placeholder="+52"
+          required
           type="tel"
         />
         <SelectField

@@ -3,12 +3,20 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Field, SelectField, TextareaField } from "./FormControls";
+import {
+  FormStatus,
+  getFormValue,
+  openWhatsAppMessage,
+  optionalValue,
+  validateNameAndPhone
+} from "./whatsapp";
 
 type Mode = "search" | "owner";
 
 export function CatalogQuickForm() {
   const [mode, setMode] = useState<Mode>("search");
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
   const isSearch = mode === "search";
 
   return (
@@ -18,6 +26,45 @@ export function CatalogQuickForm() {
       method="post"
       onSubmit={(event) => {
         event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const validationError = validateNameAndPhone(formData);
+
+        if (validationError) {
+          setSubmitted(false);
+          setError(validationError);
+          return;
+        }
+
+        if (isSearch) {
+          openWhatsAppMessage([
+            "Hola, estoy buscando una propiedad con Laurel Realty.",
+            "",
+            `Nombre: ${getFormValue(formData, "fullName")}`,
+            `WhatsApp: ${getFormValue(formData, "phone")}`,
+            "Correo: No proporcionado",
+            `Compra o renta: ${getFormValue(formData, "operation")}`,
+            `Tipo de propiedad: ${getFormValue(formData, "propertyType")}`,
+            `Zona deseada: ${optionalValue(getFormValue(formData, "zone"))}`,
+            `Presupuesto: ${optionalValue(getFormValue(formData, "budget"))}`,
+            "Recámaras: No proporcionado",
+            "Comentarios: Solicitud enviada desde el formulario rápido del catálogo."
+          ]);
+        } else {
+          openWhatsAppMessage([
+            "Hola, quiero publicar mi propiedad con Laurel Realty.",
+            "",
+            `Nombre: ${getFormValue(formData, "fullName")}`,
+            `WhatsApp: ${getFormValue(formData, "phone")}`,
+            "Correo: No proporcionado",
+            `Tipo de propiedad: ${getFormValue(formData, "ownerPropertyType")}`,
+            `Operación: ${getFormValue(formData, "ownerOperation")}`,
+            `Ubicación: ${getFormValue(formData, "propertyLocation")}`,
+            "Precio estimado: No proporcionado",
+            `Descripción o comentarios: ${optionalValue(getFormValue(formData, "message"))}`
+          ]);
+        }
+
+        setError("");
         setSubmitted(true);
       }}
     >
@@ -32,6 +79,7 @@ export function CatalogQuickForm() {
           onClick={() => {
             setMode("search");
             setSubmitted(false);
+            setError("");
           }}
           type="button"
         >
@@ -44,6 +92,7 @@ export function CatalogQuickForm() {
           onClick={() => {
             setMode("owner");
             setSubmitted(false);
+            setError("");
           }}
           type="button"
         >
@@ -51,16 +100,7 @@ export function CatalogQuickForm() {
         </button>
       </div>
 
-      {submitted ? (
-        <div
-          className="rounded-soft border border-gold/30 bg-gold/10 px-4 py-3 text-sm font-semibold text-laurel"
-          role="status"
-        >
-          {isSearch
-            ? "Gracias. Recibimos tu búsqueda y te contactaremos cuando tengamos opciones compatibles."
-            : "Gracias. Recibimos los datos de tu propiedad y te contactaremos para orientarte."}
-        </div>
-      ) : null}
+      <FormStatus error={error} submitted={submitted} />
 
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="Nombre" name="fullName" placeholder="Tu nombre" required />

@@ -3,9 +3,17 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Field, SelectField, TextareaField } from "./FormControls";
+import {
+  FormStatus,
+  getFormValue,
+  openWhatsAppMessage,
+  optionalValue,
+  validateNameAndPhone
+} from "./whatsapp";
 
 export function RentPropertyForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <form
@@ -14,19 +22,34 @@ export function RentPropertyForm() {
       method="post"
       onSubmit={(event) => {
         event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const validationError = validateNameAndPhone(formData);
+
+        if (validationError) {
+          setSubmitted(false);
+          setError(validationError);
+          return;
+        }
+
+        openWhatsAppMessage([
+          "Hola, quiero rentar mi propiedad con Laurel Realty.",
+          "",
+          `Nombre: ${getFormValue(formData, "fullName")}`,
+          `WhatsApp: ${getFormValue(formData, "phone")}`,
+          `Correo: ${optionalValue(getFormValue(formData, "email"))}`,
+          `Tipo de propiedad: ${getFormValue(formData, "propertyType")}`,
+          "Operación: renta",
+          `Ubicación: ${getFormValue(formData, "propertyLocation")}`,
+          `Precio estimado: ${optionalValue(getFormValue(formData, "expectedRent"))}`,
+          `Descripción o comentarios: ${optionalValue(getFormValue(formData, "message"))}`
+        ]);
+
+        setError("");
         setSubmitted(true);
       }}
     >
       <input name="source" type="hidden" value="laurel-realty-rent-property" />
-      {submitted ? (
-        <div
-          className="rounded-soft border border-gold/30 bg-gold/10 px-4 py-3 text-sm font-semibold text-laurel"
-          role="status"
-        >
-          Gracias. Recibimos los datos de tu propiedad y te contactaremos para
-          orientarte sobre el proceso de renta.
-        </div>
-      ) : null}
+      <FormStatus error={error} submitted={submitted} />
 
       <div className="grid gap-5 md:grid-cols-2">
         <Field

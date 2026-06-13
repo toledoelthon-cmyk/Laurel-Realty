@@ -3,9 +3,17 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Field, SelectField, TextareaField } from "./FormControls";
+import {
+  FormStatus,
+  getFormValue,
+  openWhatsAppMessage,
+  optionalValue,
+  validateNameAndPhone
+} from "./whatsapp";
 
 export function SearchClientForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <form
@@ -14,19 +22,35 @@ export function SearchClientForm() {
       method="post"
       onSubmit={(event) => {
         event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const validationError = validateNameAndPhone(formData);
+
+        if (validationError) {
+          setSubmitted(false);
+          setError(validationError);
+          return;
+        }
+
+        openWhatsAppMessage([
+          "Hola, estoy buscando una propiedad con Laurel Realty.",
+          "",
+          `Nombre: ${getFormValue(formData, "fullName")}`,
+          `WhatsApp: ${getFormValue(formData, "phone")}`,
+          `Correo: ${optionalValue(getFormValue(formData, "email"))}`,
+          `Compra o renta: ${getFormValue(formData, "operation")}`,
+          `Tipo de propiedad: ${getFormValue(formData, "propertyType")}`,
+          `Zona deseada: ${optionalValue(getFormValue(formData, "preferredZone"))}`,
+          `Presupuesto: ${optionalValue(getFormValue(formData, "budget"))}`,
+          `Recámaras: ${optionalValue(getFormValue(formData, "bedrooms"))}`,
+          `Comentarios: ${optionalValue(getFormValue(formData, "message"))}`
+        ]);
+
+        setError("");
         setSubmitted(true);
       }}
     >
       <input name="source" type="hidden" value="laurel-realty-search-client" />
-      {submitted ? (
-        <div
-          className="rounded-soft border border-gold/30 bg-gold/10 px-4 py-3 text-sm font-semibold text-laurel"
-          role="status"
-        >
-          Gracias. Recibimos tu búsqueda y te contactaremos cuando tengamos
-          opciones que puedan ajustarse a lo que necesitas.
-        </div>
-      ) : null}
+      <FormStatus error={error} submitted={submitted} />
       <div className="grid gap-5 md:grid-cols-2">
         <Field
           autoComplete="name"

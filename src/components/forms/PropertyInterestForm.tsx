@@ -2,8 +2,14 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { brand } from "@/lib/constants";
 import { Field, TextareaField } from "./FormControls";
+import {
+  FormStatus,
+  getFormValue,
+  openWhatsAppMessage,
+  optionalValue,
+  validateNameAndPhone
+} from "./whatsapp";
 
 type PropertyInterestFormProps = {
   propertyTitle: string;
@@ -11,6 +17,7 @@ type PropertyInterestFormProps = {
 
 export function PropertyInterestForm({ propertyTitle }: PropertyInterestFormProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <form
@@ -20,43 +27,38 @@ export function PropertyInterestForm({ propertyTitle }: PropertyInterestFormProp
       onSubmit={(event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        const fullName = String(formData.get("fullName") || "").trim();
-        const phone = String(formData.get("phone") || "").trim();
-        const email = String(formData.get("email") || "").trim();
-        const message = String(formData.get("message") || "").trim();
+        const validationError = validateNameAndPhone(formData);
+
+        if (validationError) {
+          setSubmitted(false);
+          setError(validationError);
+          return;
+        }
+
+        const fullName = getFormValue(formData, "fullName");
+        const phone = getFormValue(formData, "phone");
+        const email = getFormValue(formData, "email");
+        const message = getFormValue(formData, "message");
         const propertyUrl = window.location.href;
 
-        const whatsappMessage = [
+        openWhatsAppMessage([
           "Hola, quiero solicitar más información sobre una propiedad de Laurel Realty.",
           "",
           `Nombre: ${fullName}`,
           `WhatsApp: ${phone}`,
-          `Correo: ${email || "No proporcionado"}`,
-          `Mensaje: ${message || "No proporcionado"}`,
+          `Correo: ${optionalValue(email)}`,
+          `Mensaje: ${optionalValue(message)}`,
           `Propiedad: ${propertyTitle}`,
           `URL de la propiedad: ${propertyUrl}`
-        ].join("\n");
+        ]);
 
-        window.open(
-          `https://wa.me/${brand.whatsappDigits}?text=${encodeURIComponent(
-            whatsappMessage
-          )}`,
-          "_blank",
-          "noopener,noreferrer"
-        );
+        setError("");
         setSubmitted(true);
       }}
     >
       <input name="source" type="hidden" value="laurel-realty-property-interest" />
       <input name="propertyTitle" type="hidden" value={propertyTitle} />
-      {submitted ? (
-        <div
-          className="rounded-soft border border-gold/30 bg-gold/10 px-4 py-3 text-sm font-semibold text-laurel"
-          role="status"
-        >
-          Se abrió WhatsApp con tu solicitud prellenada.
-        </div>
-      ) : null}
+      <FormStatus error={error} submitted={submitted} />
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="Nombre completo" name="fullName" placeholder="Tu nombre" required />
         <Field

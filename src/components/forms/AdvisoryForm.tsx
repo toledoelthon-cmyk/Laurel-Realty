@@ -3,9 +3,17 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Field, SelectField, TextareaField } from "./FormControls";
+import {
+  FormStatus,
+  getFormValue,
+  openWhatsAppMessage,
+  optionalValue,
+  validateNameAndPhone
+} from "./whatsapp";
 
 export function AdvisoryForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <form
@@ -14,18 +22,31 @@ export function AdvisoryForm() {
       method="post"
       onSubmit={(event) => {
         event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const validationError = validateNameAndPhone(formData);
+
+        if (validationError) {
+          setSubmitted(false);
+          setError(validationError);
+          return;
+        }
+
+        openWhatsAppMessage([
+          "Hola, quiero solicitar asesoría inmobiliaria con Laurel Realty.",
+          "",
+          `Nombre: ${getFormValue(formData, "fullName")}`,
+          `WhatsApp: ${getFormValue(formData, "phone")}`,
+          `Correo: ${optionalValue(getFormValue(formData, "email"))}`,
+          `Tema: ${getFormValue(formData, "need")}`,
+          `Mensaje: ${getFormValue(formData, "message")}`
+        ]);
+
+        setError("");
         setSubmitted(true);
       }}
     >
       <input name="source" type="hidden" value="laurel-realty-advisory" />
-      {submitted ? (
-        <div
-          className="rounded-soft border border-gold/30 bg-gold/10 px-4 py-3 text-sm font-semibold text-laurel"
-          role="status"
-        >
-          Gracias. Recibimos tu solicitud y te contactaremos para orientarte.
-        </div>
-      ) : null}
+      <FormStatus error={error} submitted={submitted} />
 
       <div className="grid gap-5 md:grid-cols-2">
         <Field
