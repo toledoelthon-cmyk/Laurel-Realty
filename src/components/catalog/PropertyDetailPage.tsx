@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { PropertyInterestForm } from "@/components/forms/PropertyInterestForm";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import {
   formatPropertyLabel,
@@ -17,6 +18,7 @@ import {
   getPropertyWhatsappHref,
   type Property
 } from "@/data/properties";
+import { absoluteUrl, getPropertyDescription, getPropertyImageAlt } from "@/lib/seo";
 import { urlForPropertyImage } from "@/sanity/lib/image";
 
 type PropertyDetailPageProps = {
@@ -25,9 +27,53 @@ type PropertyDetailPageProps = {
 
 export function PropertyDetailPage({ property }: PropertyDetailPageProps) {
   const whatsappHref = getPropertyWhatsappHref(property);
+  const propertyUrl = absoluteUrl(`/propiedades/${property.slug}`);
+  const primaryImage = property.images[0]
+    ? urlForPropertyImage(property.images[0], {
+        width: 1200,
+        height: 800,
+        quality: 86
+      })
+    : undefined;
+  const propertyJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: property.title,
+    description: getPropertyDescription(property),
+    url: propertyUrl,
+    image: primaryImage ? [primaryImage] : undefined,
+    category: formatPropertyLabel(property.propertyType),
+    offers: {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      price: property.price || undefined,
+      priceCurrency: property.currency || "MXN",
+      url: propertyUrl
+    },
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Operación",
+        value: formatPropertyLabel(property.operation)
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Zona",
+        value: property.zone
+      }
+    ]
+  };
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Inicio", url: absoluteUrl("/") },
+          { name: "Propiedades", url: absoluteUrl("/propiedades") },
+          { name: property.title, url: propertyUrl }
+        ])}
+      />
+      <JsonLd data={propertyJsonLd} />
       <section className="premium-section bg-ivory">
         <div className="site-shell">
           <p className="eyebrow">Detalle de propiedad</p>
@@ -75,7 +121,7 @@ export function PropertyDetailPage({ property }: PropertyDetailPageProps) {
                     key={`${image.src}-${index}`}
                   >
                     <Image
-                      alt={image.alt}
+                      alt={getPropertyImageAlt(property)}
                       className="object-cover"
                       fill
                       priority={index === 0}

@@ -13,6 +13,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { CTASection } from "@/components/sections/CTASection";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
@@ -20,13 +21,24 @@ import { PageHero } from "@/components/sections/PageHero";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { brand, whatsappHref } from "@/lib/constants";
+import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: {
     absolute: "Contacto | Laurel Realty"
   },
   description:
-    "Contacta a Laurel Realty para vender, rentar, buscar propiedad o recibir asesoría inmobiliaria gratuita en Cancún y Riviera Maya."
+    "Contacta a Laurel Realty para vender, rentar, buscar propiedad o recibir asesoría inmobiliaria gratuita en Cancún y Riviera Maya.",
+  alternates: {
+    canonical: absoluteUrl("/contacto")
+  },
+  openGraph: {
+    title: "Contacto | Laurel Realty",
+    description:
+      "Contacta a Laurel Realty para asesoría inmobiliaria en Cancún y Riviera Maya.",
+    url: absoluteUrl("/contacto"),
+    type: "website"
+  }
 };
 
 const contactOptions = [
@@ -150,6 +162,12 @@ function ContactHeroVisual() {
 export default function ContactoPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Inicio", url: absoluteUrl("/") },
+          { name: "Contacto", url: absoluteUrl("/contacto") }
+        ])}
+      />
       <PageHero
         eyebrow="Contacto"
         primaryCTA={{

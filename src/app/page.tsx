@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { PropertyGrid } from "@/components/catalog/PropertyGrid";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProcessSteps } from "@/components/sections/ProcessSteps";
@@ -16,14 +17,25 @@ import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { TestimonialPlaceholder } from "@/components/sections/TestimonialPlaceholder";
 import { getFeaturedProperties } from "@/data/properties";
-import { whatsappHref } from "@/lib/constants";
+import { brand, siteUrl, whatsappHref } from "@/lib/constants";
+import { absoluteUrl } from "@/lib/seo";
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Laurel Realty | Asesoría inmobiliaria en Cancún y Riviera Maya",
   description:
-    "Laurel Realty ofrece asesoría y gestión inmobiliaria para vender, rentar o encontrar propiedades en Cancún y Riviera Maya."
+    "Laurel Realty ofrece asesoría y gestión inmobiliaria para vender, rentar o encontrar propiedades en Cancún y Riviera Maya.",
+  alternates: {
+    canonical: absoluteUrl("/")
+  },
+  openGraph: {
+    title: "Laurel Realty | Asesoría inmobiliaria en Cancún y Riviera Maya",
+    description:
+      "Asesoría y gestión inmobiliaria para vender, rentar o encontrar propiedades en Cancún y Riviera Maya.",
+    url: absoluteUrl("/"),
+    type: "website"
+  }
 };
 
 const mainPaths = [
@@ -133,6 +145,26 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "RealEstateAgent",
+          "@id": `${siteUrl}/#realestateagent`,
+          name: brand.name,
+          description:
+            "Asesoría y Gestión Inmobiliaria en Cancún, Playa del Carmen y Riviera Maya.",
+          url: siteUrl,
+          email: brand.email,
+          telephone: brand.whatsapp,
+          areaServed: ["Cancún", "Playa del Carmen", "Riviera Maya"],
+          contactPoint: {
+            "@type": "ContactPoint",
+            telephone: brand.whatsapp,
+            contactType: "customer service",
+            availableLanguage: "es"
+          }
+        }}
+      />
       <PageHero
         eyebrow="Asesoría y Gestión Inmobiliaria"
         primaryCTA={{ label: "Publicar mi propiedad", href: "/propietarios" }}

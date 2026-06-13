@@ -14,6 +14,7 @@ import {
   WalletCards
 } from "lucide-react";
 import { SearchClientForm } from "@/components/forms/SearchClientForm";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { CTASection } from "@/components/sections/CTASection";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
@@ -21,13 +22,24 @@ import { PageHero } from "@/components/sections/PageHero";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { whatsappHref } from "@/lib/constants";
+import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: {
     absolute: "Buscar propiedad en Cancún y Riviera Maya | Laurel Realty"
   },
   description:
-    "Cuéntanos qué propiedad buscas en Cancún o Riviera Maya y Laurel Realty te contactará cuando tenga opciones compatibles."
+    "Cuéntanos qué propiedad buscas en Cancún o Riviera Maya y Laurel Realty te contactará cuando tenga opciones compatibles.",
+  alternates: {
+    canonical: absoluteUrl("/busco-propiedad")
+  },
+  openGraph: {
+    title: "Buscar propiedad en Cancún y Riviera Maya | Laurel Realty",
+    description:
+      "Registra tu búsqueda de casa, departamento o inmueble en Cancún y Riviera Maya.",
+    url: absoluteUrl("/busco-propiedad"),
+    type: "website"
+  }
 };
 
 const benefits = [
@@ -138,6 +150,12 @@ function SearchHeroVisual() {
 export default function BuscoPropiedadPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Inicio", url: absoluteUrl("/") },
+          { name: "Busco propiedad", url: absoluteUrl("/busco-propiedad") }
+        ])}
+      />
       <PageHero
         eyebrow="Búsqueda personalizada"
         primaryCTA={{ label: "Enviar mi búsqueda", href: "#busqueda" }}

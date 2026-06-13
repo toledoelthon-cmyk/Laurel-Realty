@@ -9,6 +9,7 @@ import {
   getPropertyWhatsappHref,
   type Property
 } from "@/data/properties";
+import { getPropertyImageAlt } from "@/lib/seo";
 import { urlForPropertyImage } from "@/sanity/lib/image";
 
 type PropertyCardProps = {
@@ -27,7 +28,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
       {image ? (
         <div className="relative aspect-[4/3] w-full overflow-hidden">
           <Image
-            alt={image.alt}
+            alt={getPropertyImageAlt(property)}
             className="object-cover"
             fill
             priority={property.featured}

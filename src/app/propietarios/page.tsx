@@ -14,6 +14,7 @@ import {
   UserRoundCheck
 } from "lucide-react";
 import { PropertyOwnerForm } from "@/components/forms/PropertyOwnerForm";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { CTASection } from "@/components/sections/CTASection";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
@@ -23,13 +24,24 @@ import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { TrustBadges } from "@/components/sections/TrustBadges";
 import { whatsappHref } from "@/lib/constants";
+import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: {
     absolute: "Publica tu propiedad con Laurel Realty | Cancún y Riviera Maya"
   },
   description:
-    "Vende o renta tu propiedad en Cancún y Riviera Maya con asesoría, promoción, filtro de interesados y acompañamiento profesional."
+    "Vende o renta tu propiedad en Cancún y Riviera Maya con asesoría, promoción, filtro de interesados y acompañamiento profesional.",
+  alternates: {
+    canonical: absoluteUrl("/propietarios")
+  },
+  openGraph: {
+    title: "Publica tu propiedad con Laurel Realty | Cancún y Riviera Maya",
+    description:
+      "Asesoría para propietarios que quieren vender o rentar inmuebles en Cancún y Riviera Maya.",
+    url: absoluteUrl("/propietarios"),
+    type: "website"
+  }
 };
 
 const ownerProblems = [
@@ -215,6 +227,12 @@ function OwnerHeroVisual() {
 export default function PropietariosPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Inicio", url: absoluteUrl("/") },
+          { name: "Propietarios", url: absoluteUrl("/propietarios") }
+        ])}
+      />
       <PageHero
         eyebrow="Para propietarios"
         primaryCTA={{ label: "Solicitar asesoría gratuita", href: "#formulario" }}

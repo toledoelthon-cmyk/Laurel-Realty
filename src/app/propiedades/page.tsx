@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { PropertyCatalog } from "@/components/catalog/PropertyCatalog";
 import { CatalogQuickForm } from "@/components/forms/CatalogQuickForm";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { CTASection } from "@/components/sections/CTASection";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
@@ -14,6 +15,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { getProperties } from "@/data/properties";
+import { absoluteUrl } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +25,17 @@ export const metadata: Metadata = {
       "Propiedades en venta y renta en Cancún y Riviera Maya | Laurel Realty"
   },
   description:
-    "Consulta próximas propiedades disponibles en Cancún y Riviera Maya o publica tu inmueble con Laurel Realty."
+    "Consulta propiedades disponibles en venta y renta en Cancún y Riviera Maya con Laurel Realty.",
+  alternates: {
+    canonical: absoluteUrl("/propiedades")
+  },
+  openGraph: {
+    title: "Propiedades en venta y renta en Cancún y Riviera Maya | Laurel Realty",
+    description:
+      "Explora propiedades disponibles en Cancún y Riviera Maya con asesoría inmobiliaria profesional.",
+    url: absoluteUrl("/propiedades"),
+    type: "website"
+  }
 };
 
 const ownerBenefits = [
@@ -90,6 +102,12 @@ export default async function PropiedadesPage() {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Inicio", url: absoluteUrl("/") },
+          { name: "Propiedades", url: absoluteUrl("/propiedades") }
+        ])}
+      />
       <PageHero
         eyebrow="Catálogo inmobiliario"
         subtitle="Explora propiedades en venta y renta seleccionadas por Laurel Realty. Encuentra casas, departamentos y oportunidades inmobiliarias con información clara, atención personalizada y acompañamiento profesional."

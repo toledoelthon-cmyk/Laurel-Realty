@@ -15,6 +15,7 @@ import {
   UserRound
 } from "lucide-react";
 import { AdvisoryForm } from "@/components/forms/AdvisoryForm";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { CTASection } from "@/components/sections/CTASection";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { PageHero } from "@/components/sections/PageHero";
@@ -22,6 +23,7 @@ import { ProcessSteps } from "@/components/sections/ProcessSteps";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { whatsappHref } from "@/lib/constants";
+import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: {
@@ -29,7 +31,17 @@ export const metadata: Metadata = {
       "Asesoría inmobiliaria en Cancún y Riviera Maya | Laurel Realty"
   },
   description:
-    "Recibe asesoría inmobiliaria inicial gratuita para vender, rentar, buscar o administrar propiedades en Cancún y Riviera Maya."
+    "Recibe asesoría inmobiliaria inicial gratuita para vender, rentar, buscar o administrar propiedades en Cancún y Riviera Maya.",
+  alternates: {
+    canonical: absoluteUrl("/asesoria")
+  },
+  openGraph: {
+    title: "Asesoría inmobiliaria en Cancún y Riviera Maya | Laurel Realty",
+    description:
+      "Asesoría inmobiliaria para vender, rentar, buscar o administrar propiedades en Cancún y Riviera Maya.",
+    url: absoluteUrl("/asesoria"),
+    type: "website"
+  }
 };
 
 const services = [
@@ -218,6 +230,12 @@ function AdvisoryHeroVisual() {
 export default function AsesoriaInmobiliariaPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Inicio", url: absoluteUrl("/") },
+          { name: "Asesoría", url: absoluteUrl("/asesoria") }
+        ])}
+      />
       <PageHero
         eyebrow="Asesoría inmobiliaria"
         primaryCTA={{ label: "Solicitar asesoría gratuita", href: "#asesoria" }}

@@ -11,19 +11,31 @@ import {
 } from "lucide-react";
 import { GuideInterestForm } from "@/components/forms/GuideInterestForm";
 import { GuideCard } from "@/components/guides/GuideCard";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { CTASection } from "@/components/sections/CTASection";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { PageHero } from "@/components/sections/PageHero";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { whatsappHref } from "@/lib/constants";
+import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: {
     absolute: "Guías inmobiliarias | Laurel Realty"
   },
   description:
-    "Consejos de Laurel Realty para vender, rentar, comprar, buscar y administrar propiedades en Cancún y Riviera Maya."
+    "Consejos de Laurel Realty para vender, rentar, comprar, buscar y administrar propiedades en Cancún y Riviera Maya.",
+  alternates: {
+    canonical: absoluteUrl("/guias")
+  },
+  openGraph: {
+    title: "Guías inmobiliarias | Laurel Realty",
+    description:
+      "Guías y consejos inmobiliarios para tomar mejores decisiones en Cancún y Riviera Maya.",
+    url: absoluteUrl("/guias"),
+    type: "website"
+  }
 };
 
 const categories = [
@@ -162,6 +174,12 @@ function GuidesHeroVisual() {
 export default function GuiasInmobiliariasPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Inicio", url: absoluteUrl("/") },
+          { name: "Guías", url: absoluteUrl("/guias") }
+        ])}
+      />
       <PageHero
         eyebrow="Centro de recursos"
         primaryCTA={{ label: "Solicitar asesoría gratuita", href: "/contacto" }}

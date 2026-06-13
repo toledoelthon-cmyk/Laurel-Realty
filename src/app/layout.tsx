@@ -5,7 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { WhatsAppFloatingButton } from "@/components/layout/WhatsAppFloatingButton";
-import { brand } from "@/lib/constants";
+import { brand, siteUrl } from "@/lib/constants";
 import "./globals.css";
 
 const display = Playfair_Display({
@@ -21,6 +21,7 @@ const sans = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: `${brand.name} | ${brand.descriptor}`,
     template: `%s | ${brand.name}`
@@ -70,7 +71,7 @@ function StructuredData() {
     "@graph": [
       {
         "@type": ["LocalBusiness", "RealEstateAgent"],
-        "@id": "https://laurelrealty.mx/#business",
+    "@id": `${siteUrl}/#business`,
         name: brand.name,
         description:
           "Asesoría y Gestión Inmobiliaria en Cancún, Playa del Carmen y Riviera Maya.",
@@ -98,6 +99,7 @@ function StructuredData() {
           }
         ],
         serviceType: "Asesoría y Gestión Inmobiliaria",
+        url: siteUrl,
         openingHoursSpecification: {
           "@type": "OpeningHoursSpecification",
           description: "Atención digital y con cita previa"

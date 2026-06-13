@@ -13,6 +13,8 @@ export const brand = {
   attention: "Atención digital y con cita previa"
 };
 
+export const siteUrl = "https://www.laurelrealty.com.mx";
+
 export const whatsappHref = `https://wa.me/${brand.whatsappDigits}?text=${encodeURIComponent(
   brand.whatsappMessage
 )}`;
