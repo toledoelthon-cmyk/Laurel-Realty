@@ -17,13 +17,13 @@ type ButtonProps = {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-laurel text-ivory border-laurel hover:bg-laurel-800 hover:border-laurel-800",
+    "border-gold bg-gold text-laurel shadow-line hover:border-gold-600 hover:bg-gold-600 hover:text-ivory",
   secondary:
-    "bg-gold text-laurel border-gold hover:bg-gold-400 hover:border-gold-400",
+    "border-stone/80 bg-ivory text-laurel shadow-line hover:border-gold/70 hover:bg-white",
   outline:
-    "bg-transparent text-laurel border-gold/60 hover:border-gold hover:bg-gold/10",
+    "border-laurel/45 bg-transparent text-laurel hover:border-laurel hover:bg-laurel/8",
   ghost:
-    "bg-transparent text-laurel border-transparent hover:bg-laurel/5 hover:text-laurel-800"
+    "border-transparent bg-transparent text-laurel hover:bg-laurel/5 hover:text-laurel-800"
 };
 
 const sizes: Record<ButtonSize, string> = {
@@ -85,3 +85,4 @@ export function Button({
     </button>
   );
 }
+

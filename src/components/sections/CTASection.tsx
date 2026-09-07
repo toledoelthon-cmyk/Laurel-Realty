@@ -42,15 +42,10 @@ export function CTASection({
               <p className="mt-4 text-sm text-ivory/60">{brand.attention}</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <Button external={primaryIsExternal} href={primaryHref} variant="secondary">
+              <Button external={primaryIsExternal} href={primaryHref} variant="primary">
                 {primaryLabel}
               </Button>
-              <Button
-                className="border-ivory/35 !text-ivory hover:bg-ivory/10"
-                external={secondaryIsExternal}
-                href={secondaryHref}
-                variant="outline"
-              >
+              <Button external={secondaryIsExternal} href={secondaryHref} variant="secondary">
                 {secondaryLabel}
               </Button>
             </div>
@@ -60,3 +55,5 @@ export function CTASection({
     </section>
   );
 }
+
+

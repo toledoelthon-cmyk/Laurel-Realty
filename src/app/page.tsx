@@ -108,36 +108,36 @@ export default async function HomePage() {
         }}
       />
       <main>
-        <section className="relative isolate min-h-[660px] overflow-hidden bg-laurel text-ivory sm:min-h-[720px]">
+        <section className="relative isolate min-h-[590px] overflow-hidden bg-laurel text-ivory sm:min-h-[600px] lg:min-h-[610px]">
           <Image
             alt="Villa tropical premium con alberca en la Riviera Maya"
-            className="object-cover"
+            className="object-cover object-center"
             fill
             priority
             sizes="100vw"
             src="/images/hero/hero-villa-caribe-01.webp"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(32,62,52,0.86),rgba(32,62,52,0.48),rgba(34,55,70,0.2)),linear-gradient(180deg,rgba(32,62,52,0.1),rgba(32,62,52,0.68))]" />
-          <div className="site-container relative flex min-h-[660px] items-end pb-14 pt-28 sm:min-h-[720px] lg:pb-20">
-            <div className="max-w-3xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gold">
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(18,39,33,0.72)_0%,rgba(18,39,33,0.55)_35%,rgba(18,39,33,0.18)_65%,rgba(18,39,33,0.04)_100%)]" />
+          <div className="relative mx-auto flex min-h-[590px] w-full max-w-[1280px] items-center px-6 py-24 sm:min-h-[600px] sm:px-10 sm:py-24 lg:min-h-[610px] lg:px-16">
+            <div className="max-w-[680px] pt-8 sm:pt-10 lg:pt-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">
                 Asesoría y Gestión Inmobiliaria
               </p>
-              <h1 className="mt-5 text-5xl leading-[0.98] text-ivory sm:text-6xl lg:text-7xl">
+              <h1 className="mt-5 max-w-[680px] text-[2.55rem] leading-[1] text-ivory sm:text-[3.45rem] lg:text-[4.125rem]">
                 Prestigio, confianza y patrimonio en el Caribe Mexicano
               </h1>
-              <p className="mt-6 max-w-2xl text-base leading-8 text-ivory/82 sm:text-lg">
+              <p className="mt-6 max-w-[600px] text-[17px] font-normal leading-8 text-ivory/95 sm:text-[19px]">
                 Asesoría y gestión inmobiliaria boutique para comprar, vender e invertir entre Cancún, Playa del Carmen y la Riviera Maya.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Button href="/propiedades" variant="secondary">Ver propiedades</Button>
-                <Button href="/asesoria" variant="outline" className="border-ivory/45 text-ivory hover:bg-ivory/10">Solicitar asesoría</Button>
-                <Button external href={whatsappHref} variant="ghost" className="text-ivory hover:bg-ivory/10">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Button href="/propiedades" variant="primary">Ver propiedades</Button>
+                <Button href="/asesoria" variant="secondary">Solicitar asesoría</Button>
+                <Button external href={whatsappHref} variant="outline" className="!border-ivory/75 !bg-laurel/60 !text-ivory backdrop-blur-sm hover:!border-ivory hover:!bg-laurel/75">
                   <MessageCircle aria-hidden size={18} />
                   Hablar por WhatsApp
                 </Button>
               </div>
-              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-ivory/82">
+              <div className="mt-8 flex max-w-[620px] flex-col gap-2.5 text-sm text-ivory/90 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-3">
                 {["Asesoría inicial gratuita", "Atención digital y con cita previa", "Cancún · Riviera Maya"].map((item) => (
                   <span className="inline-flex items-center gap-2" key={item}>
                     <BadgeCheck aria-hidden className="text-gold" size={16} />
@@ -149,17 +149,17 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section className="bg-ivory py-8">
-          <div className="site-container">
-            <div className="grid gap-3 lg:grid-cols-[auto_1fr_auto] lg:items-center">
+        <section className="bg-ivory pb-10 pt-12 sm:pt-14 lg:pb-12 lg:pt-16">
+          <div className="mx-auto w-full max-w-[1280px] px-6 sm:px-10 lg:px-16">
+            <div className="grid gap-6 lg:grid-cols-[220px_1fr_auto] lg:items-center">
               <div>
                 <p className="eyebrow">Punto de partida</p>
-                <h2 className="text-3xl">¿Qué estás buscando?</h2>
+                <h2 className="mt-2 text-3xl leading-tight">¿Qué estás buscando?</h2>
               </div>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {primaryAccess.map(([title, description, href, Icon]) => (
                   <Link
-                    className="group rounded-soft border border-laurel/10 bg-white/72 px-4 py-4 shadow-line transition hover:border-gold/45"
+                    className="group flex min-h-[116px] flex-col justify-between rounded-soft border border-laurel/10 bg-white/76 px-4 py-4 shadow-line transition hover:border-gold/45 hover:bg-white"
                     href={href}
                     key={title}
                   >
@@ -276,8 +276,8 @@ export default async function HomePage() {
                 Hablemos de tu objetivo inmobiliario y revisemos juntos la mejor estrategia para avanzar con seguridad.
               </p>
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                <Button href="/asesoria" variant="secondary">Solicitar asesoría</Button>
-                <Button external href={whatsappHref} variant="outline" className="border-ivory/45 text-ivory hover:bg-ivory/10">
+                <Button href="/asesoria" variant="primary">Solicitar asesoría</Button>
+                <Button external href={whatsappHref} variant="secondary">
                   <MessageCircle aria-hidden size={18} />
                   Hablar por WhatsApp
                 </Button>
@@ -289,3 +289,13 @@ export default async function HomePage() {
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+

@@ -44,7 +44,7 @@ export function Header() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <Button href="/propietarios" size="sm" variant="secondary">
+            <Button href="/propietarios" size="sm" variant="primary">
               Publicar mi propiedad
             </Button>
           </div>
@@ -86,7 +86,7 @@ export function Header() {
             className="mt-4 w-full"
             href="/propietarios"
             onClick={() => setIsOpen(false)}
-            variant="secondary"
+            variant="primary"
           >
             Publicar mi propiedad
           </Button>
@@ -95,3 +95,4 @@ export function Header() {
     </header>
   );
 }
+
