@@ -177,7 +177,8 @@ export default function ContactoPage() {
         secondaryCTA={{ label: "Enviar mensaje", href: "#formulario" }}
         subtitle="Ya sea que quieras vender, rentar, comprar, buscar o recibir asesoría, en Laurel Realty estamos listos para escucharte y orientarte."
         title="Conversemos sobre tu objetivo inmobiliario"
-        visual={<ContactHeroVisual />}
+        image="/images/advisory/firma-documentos-02.webp"
+        imageAlt="Gestión documental para contactar a Laurel Realty"
       />
 
       <section className="premium-section bg-white/45">
@@ -321,3 +322,4 @@ export default function ContactoPage() {
     </>
   );
 }
+

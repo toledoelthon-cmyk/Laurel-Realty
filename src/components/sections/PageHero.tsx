@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +18,7 @@ type PageHeroProps = {
   tertiaryCTA?: HeroCTA;
   trustItems?: string[];
   image?: string;
+  imageAlt?: string;
   visual?: ReactNode;
   className?: string;
 };
@@ -30,6 +32,7 @@ export function PageHero({
   tertiaryCTA,
   trustItems,
   image,
+  imageAlt,
   visual,
   className
 }: PageHeroProps) {
@@ -98,11 +101,16 @@ export function PageHero({
           {visual ?? (
             <div className="surface-panel overflow-hidden p-3 lg:ml-auto lg:max-w-[520px]">
               {image ? (
-                <img
-                  alt=""
-                  className="h-[420px] w-full rounded-[0.35rem] object-cover sm:h-[480px] lg:h-[500px]"
-                  src={image}
-                />
+                <div className="relative h-[360px] overflow-hidden rounded-[0.35rem] sm:h-[420px] lg:h-[460px]">
+                  <Image
+                    alt={imageAlt ?? "Imagen de apoyo visual de Laurel Realty"}
+                    className="object-cover"
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 45vw, 100vw"
+                    src={image}
+                  />
+                </div>
               ) : (
                 <div className="relative h-[420px] overflow-hidden rounded-[0.35rem] bg-laurel sm:h-[480px] lg:h-[500px]">
                   <div className="absolute inset-6 border border-gold/35" />

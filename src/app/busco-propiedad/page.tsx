@@ -162,7 +162,8 @@ export default function BuscoPropiedadPage() {
         secondaryCTA={{ label: "Hablar por WhatsApp", href: whatsappHref }}
         subtitle="Si buscas casa, apartamento o inmueble para vivir, invertir o mudarte en Cancún o Riviera Maya, déjanos tus datos y te contactaremos cuando tengamos opciones compatibles."
         title="Cuéntanos qué propiedad estás buscando"
-        visual={<SearchHeroVisual />}
+        image="/images/properties/departamento-playa-02.webp"
+        imageAlt="Departamento premium frente al mar en Playa del Carmen"
       />
 
       <section className="premium-section">
@@ -296,3 +297,4 @@ export default function BuscoPropiedadPage() {
     </>
   );
 }
+

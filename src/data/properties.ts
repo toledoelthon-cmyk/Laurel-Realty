@@ -184,11 +184,11 @@ export function formatPropertyPrice(property: Property) {
     return "Precio a consultar";
   }
 
-  return new Intl.NumberFormat("es-MX", {
-    style: "currency",
-    currency: property.currency,
+  const formattedPrice = new Intl.NumberFormat("es-MX", {
     maximumFractionDigits: 0
   }).format(property.price);
+
+  return `$${formattedPrice} ${property.currency}`;
 }
 
 export function formatPropertyBathrooms(property: Property) {
@@ -206,3 +206,4 @@ export function formatPropertyBathrooms(property: Property) {
 export function formatPropertyLabel(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
+

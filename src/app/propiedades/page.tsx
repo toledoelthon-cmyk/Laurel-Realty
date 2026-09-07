@@ -48,9 +48,9 @@ const ownerBenefits = [
 
 const faqs = [
   {
-    question: "¿Por qué todavía no hay propiedades publicadas?",
+    question: "¿Cómo se actualiza el catálogo de propiedades?",
     answer:
-      "Laurel Realty está preparando el catálogo con propiedades reales y verificables. No publicamos inventario ficticio."
+      "Laurel Realty publica propiedades reales disponibles y actualiza el catálogo conforme se incorporan opciones verificables. No publicamos inventario ficticio."
   },
   {
     question: "¿Puedo dejar mi búsqueda ahora?",
@@ -74,29 +74,6 @@ const faqs = [
   }
 ];
 
-function CatalogHeroVisual() {
-  return (
-    <div className="surface-panel overflow-hidden p-3 lg:ml-auto lg:max-w-[520px]">
-      <div className="relative h-[420px] overflow-hidden rounded-[0.35rem] bg-laurel sm:h-[480px] lg:h-[500px]">
-        <div className="absolute inset-6 border border-gold/35" />
-        <div className="absolute left-10 right-10 top-20 h-px bg-gold/25" />
-        <div className="absolute left-10 top-20 h-40 w-px bg-gold/25" />
-        <div className="absolute bottom-28 left-10 right-10 grid grid-cols-3 gap-4">
-          <span className="h-24 border border-ivory/20 bg-ivory/8" />
-          <span className="h-32 border border-ivory/20 bg-ivory/10" />
-          <span className="h-20 border border-ivory/20 bg-ivory/8" />
-        </div>
-        <div className="absolute bottom-8 left-8 right-8 border-t border-gold/40 pt-5">
-          <p className="font-display text-3xl text-ivory">Catálogo inmobiliario</p>
-          <p className="mt-3 text-sm text-ivory/70">
-            Propiedades seleccionadas para comprar, rentar o invertir con confianza.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default async function PropiedadesPage() {
   const properties = await getProperties();
 
@@ -112,7 +89,8 @@ export default async function PropiedadesPage() {
         eyebrow="Catálogo inmobiliario"
         subtitle="Explora propiedades en venta y renta seleccionadas por Laurel Realty. Encuentra casas, departamentos y oportunidades inmobiliarias con información clara, atención personalizada y acompañamiento profesional."
         title="Propiedades disponibles en Cancún y Riviera Maya"
-        visual={<CatalogHeroVisual />}
+        image="/images/hero/hero-condo-playa-02.webp"
+        imageAlt="Departamento premium frente al mar en Playa del Carmen como apoyo visual de Laurel Realty"
       />
 
       <section className="premium-section bg-white/45">
@@ -212,3 +190,5 @@ export default async function PropiedadesPage() {
     </>
   );
 }
+
+

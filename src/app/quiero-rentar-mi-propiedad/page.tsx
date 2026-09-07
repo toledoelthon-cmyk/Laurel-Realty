@@ -218,7 +218,8 @@ export default function QuieroRentarMiPropiedadPage() {
         secondaryCTA={{ label: "Hablar con Vicky por WhatsApp", href: whatsappHref }}
         subtitle="En Laurel Realty te ayudamos a promocionar tu propiedad, filtrar interesados y llevar un proceso de renta más claro y ordenado."
         title="Renta tu propiedad con mayor seguridad y acompañamiento profesional"
-        visual={<RentHeroVisual />}
+        image="/images/properties/amenidades-residencial-07.webp"
+        imageAlt="Amenidades residenciales para rentar propiedad en Cancún y Riviera Maya"
       />
 
       <section className="premium-section bg-white/45">
@@ -347,3 +348,4 @@ export default function QuieroRentarMiPropiedadPage() {
     </>
   );
 }
+

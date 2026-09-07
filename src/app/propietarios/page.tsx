@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   AlertCircle,
   ClipboardCheck,
@@ -22,7 +23,6 @@ import { PageHero } from "@/components/sections/PageHero";
 import { ProcessSteps } from "@/components/sections/ProcessSteps";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
-import { TrustBadges } from "@/components/sections/TrustBadges";
 import { whatsappHref } from "@/lib/constants";
 import { absoluteUrl } from "@/lib/seo";
 
@@ -123,39 +123,20 @@ const processSteps = [
     description: "Compartes tipo de inmueble, ubicación, estado y objetivo inicial."
   },
   {
-    title: "Revisamos ubicación, características y objetivo",
-    description:
-      "Ordenamos la información para entender el contexto comercial de tu propiedad."
+    title: "Revisamos información y objetivo",
+    description: "Ordenamos datos clave para entender el contexto comercial del inmueble."
   },
   {
-    title: "Definimos estrategia de venta o renta",
-    description:
-      "Trazamos una ruta clara según tus prioridades, tiempos y tipo de operación."
+    title: "Definimos estrategia",
+    description: "Planteamos una ruta de venta o renta según tus tiempos y prioridades."
   },
   {
-    title: "Preparamos la publicación",
-    description:
-      "Cuidamos la presentación, el mensaje y los elementos básicos para promocionarla."
+    title: "Preparamos y promocionamos",
+    description: "Cuidamos presentación, mensaje y comunicación profesional de la propiedad."
   },
   {
-    title: "Promocionamos el inmueble",
-    description:
-      "Activamos la comunicación de la propiedad con un enfoque profesional y sobrio."
-  },
-  {
-    title: "Filtramos interesados",
-    description:
-      "Revisamos intención, necesidades y compatibilidad antes de avanzar."
-  },
-  {
-    title: "Coordinamos visitas",
-    description:
-      "Organizamos tiempos y seguimiento para cuidar tu disponibilidad."
-  },
-  {
-    title: "Te acompañamos en negociación y cierre",
-    description:
-      "Avanzamos con claridad, información y comunicación durante la etapa final."
+    title: "Filtramos, coordinamos y acompañamos el cierre",
+    description: "Damos seguimiento a interesados, visitas, negociación y próximos pasos."
   }
 ];
 
@@ -200,30 +181,6 @@ const faqs = [
   }
 ];
 
-function OwnerHeroVisual() {
-  return (
-    <div className="surface-panel overflow-hidden p-3 lg:ml-auto lg:max-w-[520px]">
-      <div className="relative h-[420px] overflow-hidden rounded-[0.35rem] bg-laurel sm:h-[480px] lg:h-[500px]">
-        <div className="absolute inset-6 border border-gold/35" />
-        <div className="absolute left-10 top-10 h-32 w-px bg-gold/30" />
-        <div className="absolute right-10 top-16 h-52 w-px bg-gold/20" />
-        <div className="absolute left-10 right-10 top-24 h-px bg-gold/25" />
-        <div className="absolute bottom-28 left-10 right-10 grid grid-cols-3 gap-4">
-          <span className="h-24 border border-ivory/20 bg-ivory/8" />
-          <span className="h-32 border border-ivory/20 bg-ivory/10" />
-          <span className="h-20 border border-ivory/20 bg-ivory/8" />
-        </div>
-        <div className="absolute bottom-8 left-8 right-8 border-t border-gold/40 pt-5">
-          <p className="font-display text-3xl text-ivory">Propietarios</p>
-          <p className="mt-3 text-sm text-ivory/70">
-            Preparación, promoción y gestión profesional para tu inmueble.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function PropietariosPage() {
   return (
     <>
@@ -239,28 +196,9 @@ export default function PropietariosPage() {
         secondaryCTA={{ label: "Hablar por WhatsApp", href: whatsappHref }}
         subtitle="En Laurel Realty te ayudamos a preparar, promocionar y gestionar tu propiedad para conectar con interesados adecuados en Cancún y Riviera Maya."
         title="Renta o vende tu propiedad con una estrategia clara y acompañamiento profesional"
-        trustItems={[
-          "Asesoría inicial gratuita",
-          "Atención digital",
-          "Citas personalizadas",
-          "Cancún y Riviera Maya"
-        ]}
-        visual={<OwnerHeroVisual />}
+        image="/images/advisory/firma-documentos-02.webp"
+        imageAlt="Gestión documental para propietarios en Cancún y Riviera Maya"
       />
-
-      <section className="premium-section-compact">
-        <div className="site-shell">
-          <TrustBadges
-            badges={[
-              "Asesoría inicial gratuita",
-              "Atención digital",
-              "Citas personalizadas",
-              "Cancún y Riviera Maya"
-            ]}
-            className="lg:grid-cols-4"
-          />
-        </div>
-      </section>
 
       <section className="premium-section bg-white/45">
         <div className="site-shell">
@@ -270,7 +208,7 @@ export default function PropietariosPage() {
             title="Sabemos que poner una propiedad en el mercado puede generar dudas"
           />
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {ownerProblems.map((problem) => (
+            {ownerProblems.slice(0, 6).map((problem) => (
               <article
                 className="rounded-soft border border-laurel/10 bg-white/70 p-5 shadow-line"
                 key={problem}
@@ -296,8 +234,8 @@ export default function PropietariosPage() {
             description="Desde el primer contacto revisamos tu objetivo, tu propiedad y las acciones necesarias para presentarla mejor ante el mercado."
             title="Te acompañamos desde la primera valoración hasta el cierre"
           />
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
-            {appliedServices.map((service) => (
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {appliedServices.slice(0, 6).map((service) => (
               <ServiceCard key={service.title} {...service} />
             ))}
           </div>
@@ -368,10 +306,21 @@ export default function PropietariosPage() {
 
       <section className="premium-section" id="formulario">
         <div className="site-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-          <SectionHeading
-            description="Completa este formulario y Vicky Izquierdo o el equipo de Laurel Realty te contactará para orientarte."
-            title="Cuéntanos sobre tu propiedad"
-          />
+          <div>
+            <SectionHeading
+              description="Completa este formulario y Vicky Izquierdo o el equipo de Laurel Realty te contactará para orientarte."
+              title="Cuéntanos sobre tu propiedad"
+            />
+            <div className="relative mt-8 h-56 overflow-hidden rounded-soft border border-gold/20 shadow-line">
+              <Image
+                alt="Gestión documental para operación inmobiliaria segura"
+                className="object-cover"
+                fill
+                sizes="(min-width: 1024px) 32vw, 100vw"
+                src="/images/advisory/firma-documentos-02.webp"
+              />
+            </div>
+          </div>
           <PropertyOwnerForm />
         </div>
       </section>
@@ -397,3 +346,7 @@ export default function PropietariosPage() {
     </>
   );
 }
+
+
+
+

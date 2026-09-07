@@ -242,7 +242,8 @@ export default function AsesoriaInmobiliariaPage() {
         secondaryCTA={{ label: "Hablar por WhatsApp", href: whatsappHref }}
         subtitle="En Laurel Realty te orientamos en procesos de venta, renta, búsqueda, publicación y administración de propiedades para que avances con claridad y confianza."
         title="Asesoría inmobiliaria para tomar decisiones con mayor seguridad"
-        visual={<AdvisoryHeroVisual />}
+        image="/images/advisory/asesoria-cliente-01.webp"
+        imageAlt="Asesoría inmobiliaria boutique en Cancún y Riviera Maya"
       />
 
       <section className="premium-section">
@@ -364,3 +365,4 @@ export default function AsesoriaInmobiliariaPage() {
     </>
   );
 }
+

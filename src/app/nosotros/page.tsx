@@ -95,7 +95,8 @@ export default function NosotrosPage() {
         primaryCTA={{ label: "Hablar con un asesor", href: whatsappHref }}
         subtitle="En Laurel Realty acompañamos a propietarios, compradores e interesados en renta con un proceso basado en confianza, comunicación y claridad."
         title="Una asesoría inmobiliaria cercana, clara y profesional"
-        visual={<AboutHeroVisual />}
+        image="/images/advisory/asesoria-cliente-01.webp"
+        imageAlt="Asesoría inmobiliaria boutique de Laurel Realty en Cancún y Riviera Maya"
       />
 
       <section className="premium-section">
@@ -261,3 +262,4 @@ export default function NosotrosPage() {
     </>
   );
 }
+

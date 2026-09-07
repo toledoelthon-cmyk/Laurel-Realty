@@ -185,7 +185,8 @@ export default function GuiasInmobiliariasPage() {
         primaryCTA={{ label: "Solicitar asesoría gratuita", href: "/contacto" }}
         subtitle="Consejos prácticos para vender, rentar, buscar y administrar propiedades con mayor claridad y seguridad."
         title="Guías inmobiliarias para tomar mejores decisiones"
-        visual={<GuidesHeroVisual />}
+        image="/images/hero/hero-interior-premium-03.webp"
+        imageAlt="Interior premium para guías inmobiliarias en Cancún y Riviera Maya"
       />
 
       <section className="premium-section">
@@ -294,3 +295,4 @@ export default function GuiasInmobiliariasPage() {
     </>
   );
 }
+

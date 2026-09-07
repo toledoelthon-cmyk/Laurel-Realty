@@ -201,7 +201,8 @@ export default function QuieroVenderPage() {
         secondaryCTA={{ label: "Hablar con Vicky por WhatsApp", href: whatsappHref }}
         subtitle="En Laurel Realty te ayudamos a valorar, preparar, promocionar y negociar tu propiedad para conectar con compradores adecuados."
         title="Vende tu propiedad con una estrategia clara y asesoría profesional"
-        visual={<SellHeroVisual />}
+        image="/images/advisory/firma-documentos-02.webp"
+        imageAlt="Gestión documental para operación inmobiliaria segura"
       />
 
       <section className="premium-section">
@@ -323,3 +324,4 @@ export default function QuieroVenderPage() {
     </>
   );
 }
+
